@@ -1,20 +1,20 @@
 package farhadfaghihi.lockedme;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.util.Arrays;
+import farhadfaghihi.lockedme.utils.FileOpsManager;
 
 public class MainMenuManager {
+    public static void main(String[] args) {
+        MainMenuManager mainMenuManager = new MainMenuManager();
+        mainMenuManager.start();
+    }
+
     public void start() {
         try {
-            ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-            File mainMenuContentFile = new File(classLoader.getResource("content_mainmenu.txt").getFile());
-            String mainMenuContent = Arrays.toString(Files.readAllBytes(mainMenuContentFile.toPath()));
+            String mainMenuContent = new FileOpsManager().readFileInResources("content_mainmenu.txt");
             System.out.print(mainMenuContent);
 
         } catch (Exception exc) {
-            System.out.println("Execution Terminated");
-            System.out.println(exc.getMessage());
+            System.out.println("Execution Terminated : \n" + exc.getMessage());
             System.exit(-1);
         }
     }

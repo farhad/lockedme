@@ -1,16 +1,14 @@
 package farhadfaghihi.lockedme;
 
+import farhadfaghihi.lockedme.utils.FileOpsManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.nio.file.Files;
-import java.util.Arrays;
 
 public class MainMenuTest {
 
@@ -19,8 +17,12 @@ public class MainMenuTest {
     private static final PrintStream originalOut = System.out;
     private static final PrintStream originalErr = System.err;
 
+    private FileOpsManager fileOpsManager;
+
     @Before
     public void setUp() {
+        fileOpsManager = new FileOpsManager();
+
         System.setOut(new PrintStream(outContent));
         System.setErr(new PrintStream(errContent));
     }
@@ -29,15 +31,14 @@ public class MainMenuTest {
     public void tearDown() {
         System.setOut(originalOut);
         System.setErr(originalErr);
+
+        fileOpsManager.clearResources();
     }
 
     @Test
     public void it_shows_the_main_menu_content_when_app_starts() throws IOException {
         // Arrange
-        ClassLoader classLoader = ClassLoader.getSystemClassLoader();
-        File mainMenuContentFile = new File(classLoader.getResource("content_mainmenu.txt").getFile());
-        String mainMenuContent = Arrays.toString(Files.readAllBytes(mainMenuContentFile.toPath()));
-
+        String mainMenuContent = fileOpsManager.readFileInResources("content_mainmenu.txt");
         MainMenuManager mainMenuManager = new MainMenuManager();
 
         // Act

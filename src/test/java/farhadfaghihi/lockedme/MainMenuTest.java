@@ -22,9 +22,6 @@ public class MainMenuTest {
     @Before
     public void setUp() {
         fileOpsManager = new FileOpsManager();
-
-        System.setOut(new PrintStream(outContent));
-        System.setErr(new PrintStream(errContent));
     }
 
     @After
@@ -40,6 +37,9 @@ public class MainMenuTest {
         // Arrange
         String mainMenuContent = fileOpsManager.readFileInResources("content_mainmenu.txt");
         MainMenuManager mainMenuManager = new MainMenuManager();
+
+        System.setOut(new PrintStream(outContent));
+        System.setErr(new PrintStream(errContent));
 
         // Act
         mainMenuManager.start();

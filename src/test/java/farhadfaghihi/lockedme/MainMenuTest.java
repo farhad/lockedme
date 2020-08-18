@@ -22,6 +22,9 @@ public class MainMenuTest {
     @Before
     public void setUp() {
         fileOpsManager = new FileOpsManager();
+
+        System.setOut(new PrintStream(outContent));
+        System.setErr(new PrintStream(errContent));
     }
 
     @After
@@ -33,18 +36,15 @@ public class MainMenuTest {
     }
 
     @Test
-    public void it_shows_the_main_menu_content_when_app_starts() throws IOException {
+    public void it_shows_the_welcome_message_correctly() throws IOException {
         // Arrange
-        String mainMenuContent = fileOpsManager.readFileInResources("content_mainmenu.txt");
-        MainMenuManager mainMenuManager = new MainMenuManager();
-
-        System.setOut(new PrintStream(outContent));
-        System.setErr(new PrintStream(errContent));
+        String welcomeMessage = fileOpsManager.readFileInResources("welcome.txt");
 
         // Act
-        mainMenuManager.start();
+        MainMenuManager mainMenuManager = new MainMenuManager();
+        mainMenuManager.showWelcomeMessage();
 
         // Assert
-        Assert.assertEquals(mainMenuContent, outContent.toString());
+        Assert.assertEquals(welcomeMessage, outContent.toString());
     }
 }
